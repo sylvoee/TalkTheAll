@@ -12,14 +12,14 @@ module.exports = function profile(req, res){
 
 // get create profile
 module.export = createProfileForm = (req, res, next)=>{
-  console.log(req.session.user._id);
+  // console.log(req.session.user._id);
   userModel.findById(req.session.user._id).exec((err, docs)=>{
   if(err){
 console.log(err);
   }
   if(docs){
   res.render("createProfile", {aUser:req.session.user, docs:docs});
-  console.log(docs)
+  // console.log(docs)
   }
   });
 

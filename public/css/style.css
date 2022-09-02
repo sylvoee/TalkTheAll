@@ -99,7 +99,9 @@ a:focus {
 
 @-webkit-keyframes spin {
     0% { -webkit-transform: rotate(0deg); }
-    100% { -webkit-transform: rotate(360deg); }
+    33.3% { -webkit-transform: rotate(360deg); }
+   66.7% { -webkit-transform: rotate(360deg); }
+   100% { -webkit-transform: rotate(360deg); }
 }
 
 @keyframes spin {
@@ -148,9 +150,9 @@ a:focus {
 
 .navbar .navbar-brand {
     margin: 0;
-    font-size: 30px;
+    font-size: 88%;
     line-height: 0px;
-    font-weight: 700;
+    font-weight: 500;
     letter-spacing: 2px;
     transition: .5s;
     
@@ -226,7 +228,7 @@ a:focus {
     }
     
     .navbar .navbar-nav {
-        margin-top: 15px;
+        margin-top: 10px;
     }
     
     .navbar a.nav-link {
@@ -316,8 +318,8 @@ a:focus {
 }
 
 .hero .hero-text .typed-cursor {
-    font-size: 35px;
-    font-weight: 300;
+    font-size: 25px;
+    font-weight: 200;
     color: #ffffff;
 }
 
@@ -1223,8 +1225,8 @@ a:focus {
 /*******************************/
 .testimonial {
     position: relative;
-    margin: 45px 0;
-    padding: 90px 0;
+    margin: 25px 0;
+    padding: 40px 0;
     background: #f0f4f5;
 }
 
@@ -1244,13 +1246,13 @@ a:focus {
 
 .testimonial .testimonial-item {
     position: relative;
-    margin: 0 15px;
+    margin: 0 5px;
     text-align: center;
 }
 
 .testimonial .testimonial-img {
     position: relative;
-    margin-bottom: 15px;
+    margin-bottom: 5px;
     z-index: 1;
 }
 
@@ -1264,7 +1266,7 @@ a:focus {
 
 .testimonial .testimonial-text {
     position: relative;
-    margin-top: -70px;
+    margin-top: -40px;
     padding: 65px 35px 30px 35px;
     text-align: center;
     background: #ffffff;

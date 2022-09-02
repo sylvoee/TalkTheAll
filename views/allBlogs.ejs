@@ -1,14 +1,9 @@
-
-
-    <body data-spy="scroll" data-target=".navbar" data-offset="51">
+ <body data-spy="scroll" data-target=".navbar" data-offset="51">
         
      
         <div class="portfolio " id="portfolio">
             <div class="container">
-                <div class="section-header text-center wow zoomIn" data-wow-delay="0.1s">
-                    <p class="mt-5">All Blogs</p>
-                    <h3>Here is a list of Blogs</h3>
-                </div>
+                
                 <div class="row">
                     <div class="col-12">
                         <ul id="portfolio-filter">
@@ -37,12 +32,9 @@
                                 <div>
                                     <form method="POST" action="/delete-blog?_method=DELETE">
                                     <input type="hidden" name = "id" value="<%= dt.id %>">
-
                                     <% if(typeof dt.image[0] != 'undefined'){%>
                                     <input type="hidden" name = "imageName" value="<%= dt.image[0].filename %>">
                                     <%}%>
-
-
                                     <button type = "submit" class = "btn btn-bg-danger"><i class ="fa fa-trash"></i></button>
                                     </form>
                                     <a href="/edit-post/<%= dt.id %>"><button class="btn btn-info"><i class ="fa fa-pen"></i></button></a>

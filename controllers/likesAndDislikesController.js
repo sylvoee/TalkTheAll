@@ -143,8 +143,14 @@ let duplicateLikeComment = ""
 module.exports = likeAComment = (req, res, next)=>{
   const{ commentID, postID} = req.body;
   let user = req.session.user._id
-  // console.log(commentID)
- const aLike = new likeCommentModel({commentID:commentID,postID:postID, user :user });
+   console.log("tHIS IS THE POST id" + postID);
+
+ const aLike = new likeCommentModel({commentID:commentID,postID:postID, user :user }, (err, docs )=>{
+     if(docs){
+     console.log("Here are the data "  + docs)
+     }
+   });
+
 
  likeCommentModel.find({}).exec((err, data)=>{
  if(err){
@@ -153,7 +159,7 @@ module.exports = likeAComment = (req, res, next)=>{
  if(data){ 
 // loop though each data
 data.forEach(dt => {
-  if(dt.commentID == commentID && dt.user == user){
+  if(dt.postID == postID && dt.user == user){
     duplicateLikeComment = "exist";
   }else if(dt.commentID != commentID && dt.user != user){
    duplicateLikeComment = "noExist";
@@ -168,13 +174,13 @@ data.forEach(dt => {
     res.redirect('back');
     console.log("Data exist ok");
     }else if(duplicateLikeComment == "noExist" || duplicateLikeComment == "" ){
-    const aLike = new likeCommentModel({commentID : commentID, user:user });
+    const aLike = new likeCommentModel({commentID : commentID, postID:postID, user:user });
       aLike.save((err, data)=>{
        if(err){
            // console.log(err);
        }
        if(data){
-         //  console.log(data)
+          console.log(data)
         
        }
       });
@@ -211,10 +217,10 @@ module.exports = allLikeComments = (req, res, next)=>{
 // dislikeAComment
 let dDislikeComment = ""
 module.exports = dislikeAComment = (req, res, next)=>{
-  const{ commentID, postID} = req.body;
+  const{commentID, postID} = req.body;
   let user = req.session.user._id
   console.log(commentID)
- const aDislike = new dislikeCommentModel({commentID:commentID,postID:postID, user :user });
+ const aDislike = new dislikeCommentModel({commentID:commentID, postID:postID, user :user });
 
  dislikeCommentModel.find({}).exec((err, data)=>{
  if(err){
@@ -238,7 +244,7 @@ data.forEach(dt => {
     res.redirect('back');
     console.log("Data exist ok");
     }else if(dDislikeComment == "noExist" || dDislikeComment == "" ){
-    const aDislike = new dislikeCommentModel({commentID : commentID, user:user });
+    const aDislike = new dislikeCommentModel({commentID : commentID, postID:postID, user:user });
     aDislike.save((err, data)=>{
        if(err){
            // console.log(err);

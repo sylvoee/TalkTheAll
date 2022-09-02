@@ -83,7 +83,7 @@ router.get('/all-like-comments', allLikeComments);
 router.get('/all-dislike-comments', allDisLikeComments);
 
 router.get('/',trendingArticles, index);
-// router.get('/about', aboutController);
+// router.get('/about', trendingArticles, about);
 
 router.get('/abc', abc);
 router.get('/abcd', abcd);

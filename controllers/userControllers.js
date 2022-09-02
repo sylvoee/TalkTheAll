@@ -63,7 +63,7 @@ const { render } = require('ejs');
 
 // get sign up controller
 module.exports = signUp = (req, res)=>{
-     res.render('signUp', {title: "Emslem-Register"});
+     res.render('signUp', {title: "Deforum-Register"});
  }
 
  // post signUp
@@ -126,7 +126,7 @@ module.exports = signUp = (req, res)=>{
              // console.log(Users)
 
             //    sending mail
-sendMail(email, 'WELCOME TO EMSLEM, FORUM', '<div><h1>EMSLEM FORUM </h1><p>Thanks for signing up with Emslem Forum . Please click <a href = "https://glaremindstechtest.herokuapp.com/login"><b>HERE</b></a> to login</p></div>');
+sendMail(email, 'WELCOME TO Deforum, FORUM', '<div><h1>Deforum</h1><p>Thanks for signing up with Deforum . Please click <a href = "https://glaremindstechtest.herokuapp.com/login"><b>HERE</b></a> to login</p></div>');
              }
            })
            
@@ -264,7 +264,7 @@ module.exports = confirmEmail = (req, res)=>{
              
               const link = 'https://glaremindstechtest.herokuapp.com/change-password';
                // console.log(resetId)
-sendMail(email, 'CHANGE PASSWORD / FORGET  PASSWORD', '<div><h2>EMSLEM</h2><form action="https://glaremindstechtest.herokuapp.com/reset-id" method = "POST"><input type="hidden" value="'+ resetId + '" name="test"><button class= "btn btn-info">Click To Reset</button></form></div> ');
+sendMail(email, 'CHANGE PASSWORD / FORGET  PASSWORD', '<div><h2>Deforum</h2><form action="https://glaremindstechtest.herokuapp.com/reset-id" method = "POST"><input type="hidden" value="'+ resetId + '" name="test"><button class= "btn btn-info">Click To Reset</button></form></div> ');
                 res.redirect('/');
             }
         }else{
@@ -280,7 +280,7 @@ sendMail(email, 'CHANGE PASSWORD / FORGET  PASSWORD', '<div><h2>EMSLEM</h2><form
  // reset Id
  module.exports = getId = (req, res)=>{
   const{test}= req.body;
-  res.render('changePassword', {resetId : test, title:"Emslem - Password Reset"});
+  res.render('changePassword', {resetId : test, title:"Deforum - Password Reset"});
  
 }
  
@@ -288,7 +288,7 @@ sendMail(email, 'CHANGE PASSWORD / FORGET  PASSWORD', '<div><h2>EMSLEM</h2><form
  // Get Change Password
  module.exports = changePassword =(req, res)=>{
      console.log("Change password route reached")
-     res.render('changePassword', { resetId :  resetId, title:"Emslem - Password Reset"});
+     res.render('changePassword', { resetId :  resetId, title:"Deforum - Password Reset"});
  }
 
  //update forget password controller

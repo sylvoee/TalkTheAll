@@ -5,30 +5,42 @@
 
         <title> <%= aPost.title  %>  </title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
-        <meta content="Free Website Template" name="keywords">
-        <meta content="Free Website Template" name="description">
+        
+       
+       
 
     </head>
 
-    <body data-spy="scroll" data-target=".navbar" data-offset="51" >
+    <body data-spy="scroll" data-target=".navbar" data-offset="42" >
         <section>
     
        <!-- Blog Start -->
-       <div class="blog 0ffset-4" id="blog" >
+       <div class="blog id="blog" >
         <div class="container mt-5">
-            <div class="section-header text-center wow zoomIn p-3 col-8 offset-3" data-wow-delay="0.1s"> 
-                <h2 class="h2 typed-text" style="font-family: cursive; font-size: x-large;"><%= aPost.title  %></h2>
+            <div class="section-header text-center wow zoomIn p-1 col-8 " data-wow-delay="0.1s"> 
+                <h2 class="h2 typed-text" style="font-family: cursive; font-size: x-large; text-align:center;"><%= aPost.title  %></h2>
             </div>
 
             <div class="row aPost">
-                 <div class="col-sm-3 p-2 other-blogs" style="overflow:scroll; height:150vh;">
+                 <div class="col-sm-3 p-3   other-blogs" style="overflow:scroll; height:180vh;">
+                      <div><h3 class="textinfo">Latest Stories</h3></div>
                 <% if(typeof trendingArticles == 'undefined' || trendingArticles == ''){%>
                 <p class="text-center">NO Trending Story</p>
                <% }else{%>
-                <div><h3 class="textinfo">Latest Stories</h3></div>
-                <% trendingArticles.forEach((art)=>{%>
+                    
+                    <div class="blog-img">
+                               <% if(typeof aPost.image[0] == 'undefined'){%>
+             <img src="/img/hero.png" style="width: 100%;" alt="Alt-pix">            
+                               <%}else{%>
+            <img src="/uploads/<%= aPost.image[0].filename %> %>" style=" width: 100%; alt="Blog">
+            <p><%= aPost.title %></p>
+                               <%} %> 
+                            </div>
+                    
+                    
+                <% trendingArticles.reverse().forEach((art)=>{%>
                     <div class="mb-3 ">
-                        <div class="img wow fadeInUp">
+                        <div class="img wow fadeInUp data-wow-delay="0.3s">
                             <% if(typeof art.image[0] == 'undefined'){%>
             <img style="width: 100%;" src="/img/hero.png %> " alt=""> 
                                 <%}else{%>
@@ -38,7 +50,7 @@
                         </div>
 
                         <div class="title">
-                            <b class=""><%= art.title  %> </b>
+                            <b class="" style = "text-align:center;"><%= art.title  %> </b>
                         </div>
                         <% if(typeof art.user == 'undefined'){%>
                             <p></p>
@@ -59,21 +71,24 @@
             </div>
              
                 <div class="col-sm-9 main" >
-            <div class="container">
-                    <div class="col-lg-12">
-                        <div class="blog-item wow fadeInUp" data-wow-delay="0.3s">
-                            <div class="blog-img">
+            <div class="">
+                <div class="">
+                   
                                <% if(typeof aPost.image[0] == 'undefined'){%>
-             <img src="/img/hero.png" style="width: 60%;" alt="Alt-pix">            
+            <b></b>         
                                <%}else{%>
-            <img src="/uploads/<%= aPost.image[0].filename %> %>" style="height: 70vh;" alt="Blog">
+                               
+            <div class="blog-item wow fadeInUp" data-wow-delay="0.3s">
+            <img class ="img-responsive" src="/uploads/<%= aPost.image[0].filename %> %>" style=" width: 100%; object-fit:cover; max-height: 490px; "  alt="Blog">
                                <%} %> 
                             </div>
                             <div class="blog-text">
+                                <p><a href="/view-a-profile/<%= aPost.user.id  %>"> <b>Admin</b> </a>
+                                </p>
+                               
                                 <div class="blog-meta">
                   
-                    <p> Published By Admin </p>
-                   
+               
                    <br>
                                     <p><%= aPost.createdAt.toLocaleDateString('en-US') %> </p>
                                     <% let countComments = 0 %> 
@@ -90,12 +105,7 @@
                                    <%}%> 
                                    
                                    
-                                 <!-- facebook share -->
-                                    <div id="fb-root"></div>
-                                    <div class="fb-share-button" 
-                                    data-href="https://www.your-domain.com/your-page.html" 
-                                    data-layout="button_count">
-                                    </div>
+                                
 
                 <!-- like post -->
             <form class="ml-3" action="/like-post"  method="POST">
@@ -133,9 +143,9 @@
                 <%} %> 
             <%= counts %>
                           </form> 
+                          
+                          
                  
-                               
-            
 
             <%}else{%>
 
@@ -162,7 +172,10 @@
             </form>
 
            
-    <form class="ml-3" action="/dislike-post"  method="POST"><input type="hidden" value="<%= aPost.id %>" name ="postID"><button  type="submit" class="border-0 delete-like" ><i class="far fa-thumbs-down text-danger"> </i></button>
+    <form class="ml-3" action="/dislike-post"  method="POST">
+        
+        <input type="hidden" value="<%= aPost.id %>" name ="postID">
+        <button  type="submit" class="border-0 delete-like" ><i class="far fa-thumbs-down text-danger"> </i></button>
                 <% let countDis = 0 %> 
                 <% if(typeof dislikes == 'undefined'){%>
                     <i></i>
@@ -182,9 +195,18 @@
 
                 </div>
                 <hr>
+                
+                 <!-- facebook share -->
+                <div id="fb-root"></div>
+                <div class="fb-share-button" 
+            data-href="https://deforum.ng/viewPost/<%= aPost.id %>" 
+                                    data-layout="button_count">
+                                    </div>
                     <p class="blockquote-reverse" style="font-family: monospace;font-size: large;">
                         <%- aPost.blog  %> 
                     </p>
+                    
+                    
                     <!-- comment -->
                     <hr>
                     <details>
@@ -269,7 +291,7 @@
 <p ><i class="far fa-calendar-alt text-primary"></i><i class="text-warning"><%= aPost.createdAt.toLocaleString('en-US')  %></i> </p>
                
 
-    <!-- like and dislike comments-->
+    <!-- like and like comments-->
     <% if(typeof aUser =='undefined'){%>
         
         <form class="ml-3" action="/like-comment"  method="POST">
@@ -325,17 +347,21 @@
                
             <!-- To output like-comments counts -->
             <% let countLikeComments = 0 %> 
-            <% if(typeof likeComments != 'undefined'){%>
-             
-                <% likeComments.forEach(like => {%>
+            <% if(typeof likeComments != 'undefined' ){%>
+
+             <% likeComments.forEach(like => {%>
                     <% if(like.commentID.id == comment.id ){ %>
-                        <% countLikeComments ++ %>
-            <%}%>
-            <%}) %> 
+                    <% countLikeComments ++ %>
+                <%}%>
+                <%}) %> 
+               
+             
+                
+
             <b><%= countLikeComments %> </b>
                     </form>
-           <%}else{%>
-         <p></p>
+           <%}else if(typeof likeComments == 'undefined' || likeComments.length > 0){%>
+         <i></i>
            <%}%>
            
            

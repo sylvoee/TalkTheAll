@@ -1,17 +1,17 @@
 
 
     <body data-spy="scroll" data-target=".navbar" data-offset="51">
-        <div class="portfolio" id="portfolio">
+        <div class="portfolio" id="portfolio" style = "margin-top:10px;">
             <div class="container">
                 <div class="section-header text-center wow zoomIn" data-wow-delay="0.1s">
                     <p>All Blogs</p>
-                    <h4 class="h5">Select Category and <em>SCROLL</em> down to see all</h4>
+                    
                 </div>
                 <div class="row">
                     <div class="col-12">
                         <ul id="portfolio-filter">
                             <li data-filter="*" class="filter-active">All</li>
-                            <li data-filter=".tourism " class="filter-active">Toutrism</li>
+                            <li data-filter=".tourism " class="filter-active">Tourism</li>
                             <li data-filter=".Business" class="filter-active">Business</li>
                             <li data-filter=".Vacancy" class="filter-active">Vacancies</li>
                             <li data-filter=".Entertainment" class="filter-active">Entertainment</li>
@@ -30,14 +30,14 @@
                          <% if(typeof data == 'undefined'){%>
                           <p></p>
                          <%}else{
-                         data.forEach((dt)=>{%>
+                         data.reverse().forEach((dt)=>{%>
                             <% if (dt) {%>
                             <div class="portfolio-wrap" >
                             <div class="portfolio-img">
                             <% if(typeof dt.image[0] == 'undefined'){%>
-                <img src="img/hero.png" style="width: 60%;" alt="Alt-pix">         
+                <p></p>       
                             <%}else{%>
-             <img src="/uploads/<%= dt.image[0].filename %>" style="height: 60vh;" alt="Blog">
+             <img src="/uploads/<%= dt.image[0].filename %>" style="height: 40vh;" alt="Blog">
                            <% } %>
                             </div>
                             <div class="">
@@ -54,7 +54,7 @@
                         <a class="btn" href="/uploads/<%= dt.image[0].filename %>" data-lightbox="portfolio">+</a>
                                <%}%>
                                 
-                                <i class="far fa-calendar-alt"></i><%= dt.createdAt.toLocaleString('en-US') %></p>
+                               <%= dt.createdAt.toLocaleString('en-US') %></p>
                                  
                             </div>
                             </div>
@@ -80,14 +80,14 @@
                             <div class="portfolio-wrap" >
                             <div class="portfolio-img">
                         <% if(typeof dt.image[0] == 'undefined'){%>
-                <img src="img/hero.png" style="width: 60%;" alt="Alt-pix">         
+               <p></p>
                             <%}else{%>
-             <img src="/uploads/<%= dt.image[0].filename %>" style="height: 60vh;" alt="Blog">
+             <img src="/uploads/<%= dt.image[0].filename %>" style="height: 40vh;" alt="Blog">
                            <% } %>
                             </div>
                             <div class="">
         
-                                <h4 class="h4"><%= dt.title  %> </h4>
+                                <h4 class="h4 offset-3"><%= dt.title  %> </h4>
                             </div>
                             <div class="card mt-2">
                             <div class="card-body">
@@ -122,9 +122,9 @@
                             <div class="portfolio-wrap" >
                             <div class="portfolio-img">
                                 <% if(typeof dt.image[0] == 'undefined'){%>
-                <img src="img/hero.png" style="width: 60%;" alt="Alt-pix">         
+               <p></p>       
                             <%}else{%>
-             <img src="/uploads/<%= dt.image[0].filename %>" style="height: 60vh;" alt="Blog">
+             <img src="/uploads/<%= dt.image[0].filename %>" style="height: 40vh;" alt="Blog">
                            <% } %>
                             </div>
                             <div class="">
@@ -164,9 +164,9 @@
                             <div class="portfolio-wrap" >
                             <div class="portfolio-img">
                                 <% if(typeof dt.image[0] == 'undefined'){%>
-                <img src="img/hero.png" style="width: 60%;" alt="Alt-pix">         
+               <p></p>       
                             <%}else{%>
-             <img src="/uploads/<%= dt.image[0].filename %>" style="height: 60vh;" alt="Blog">
+             <img src="/uploads/<%= dt.image[0].filename %>" style="height: 40vh;" alt="Blog">
                            <% } %>
                             </div>
                             <div class="">
@@ -209,9 +209,9 @@
                             <div class="portfolio-wrap" >
                             <div class="portfolio-img">
                                 <% if(typeof dt.image[0] == 'undefined'){%>
-                <img src="img/hero.png" style="width: 60%;" alt="Alt-pix">         
+                     
                             <%}else{%>
-             <img src="/uploads/<%= dt.image[0].filename %>" style="height: 60vh;" alt="Blog">
+             <img src="/uploads/<%= dt.image[0].filename %>" style="height: 40vh;" alt="Blog">
                            <% } %>
                             </div>
                             <div class="">
@@ -251,9 +251,9 @@
                             <div class="portfolio-wrap" >
                             <div class="portfolio-img">
                                 <% if(typeof dt.image[0] == 'undefined'){%>
-                <img src="img/hero.png" style="width: 60%;" alt="Alt-pix">         
+               <p></p>        
                             <%}else{%>
-             <img src="/uploads/<%= dt.image[0].filename %>" style="height: 60vh;" alt="Blog">
+             <img src="/uploads/<%= dt.image[0].filename %>" style="height: 40vh;" alt="Blog">
                            <% } %>
                             </div>
                             <div class="">
@@ -294,9 +294,9 @@
                             <div class="portfolio-wrap" >
                             <div class="portfolio-img">
                                 <% if(typeof dt.image[0] == 'undefined'){%>
-                <img src="img/hero.png" style="width: 60%;" alt="Alt-pix">         
+                <p></p>    
                             <%}else{%>
-             <img src="/uploads/<%= dt.image[0].filename %>" style="height: 60vh;" alt="Blog">
+             <img src="/uploads/<%= dt.image[0].filename %>" style="height: 40vh;" alt="Blog">
                            <% } %>
                             </div>
                             <div class="">
@@ -336,9 +336,9 @@
                             <div class="portfolio-wrap" >
                             <div class="portfolio-img">
                                 <% if(typeof dt.image[0] == 'undefined'){%>
-                <img src="img/hero.png" style="width: 60%;" alt="Alt-pix">         
+                <p></p>       
                             <%}else{%>
-             <img src="/uploads/<%= dt.image[0].filename %>" style="height: 60vh;" alt="Blog">
+             <img src="/uploads/<%= dt.image[0].filename %>" style="height: 40vh;" alt="Blog">
                            <% } %>
                             </div>
                             <div class="">
@@ -377,9 +377,9 @@
                             <div class="portfolio-wrap" >
                             <div class="portfolio-img">
                                 <% if(typeof dt.image[0] == 'undefined'){%>
-                <img src="img/hero.png" style="width: 60%;" alt="Alt-pix">         
+                <p></p>       
                             <%}else{%>
-             <img src="/uploads/<%= dt.image[0].filename %>" style="height: 60vh;" alt="Blog">
+             <img src="/uploads/<%= dt.image[0].filename %>" style="height: 40vh;" alt="Blog">
                            <% } %>
                             </div>
                             <div class="">
@@ -417,9 +417,9 @@
                             <div class="portfolio-wrap" >
                             <div class="portfolio-img">
                                 <% if(typeof dt.image[0] == 'undefined'){%>
-                <img src="img/hero.png" style="width: 60%;" alt="Alt-pix">         
+                <p></p>        
                             <%}else{%>
-             <img src="/uploads/<%= dt.image[0].filename %>" style="height: 60vh;" alt="Blog">
+             <img src="/uploads/<%= dt.image[0].filename %>" style="height: 40vh;" alt="Blog">
                            <% } %>
                             </div>
                             <div class="">
@@ -459,9 +459,9 @@
                             <div class="portfolio-wrap" >
                             <div class="portfolio-img">
                                 <% if(typeof dt.image[0] == 'undefined'){%>
-                <img src="img/hero.png" style="width: 60%;" alt="Alt-pix">         
+               <p></p>       
                             <%}else{%>
-             <img src="/uploads/<%= dt.image[0].filename %>" style="height: 60vh;" alt="Blog">
+             <img src="/uploads/<%= dt.image[0].filename %>" style="height: 40vh;" alt="Blog">
                            <% } %>
                             </div>
                             <div class="">

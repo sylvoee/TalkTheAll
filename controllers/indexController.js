@@ -21,8 +21,20 @@ module.exports =  index = (req, res, next)=>{
 //    {name: "Mark Henry", age:32, location: "London"}
 // ]
 
+// module.exports = about = (req, res)=>{
+// res.render('about', 
+// {
+//     aUser:req.session.user,
+//     title: "About Us",
+//     trendingArticles: req.trendingArticles
+    
+// });
+// }
+
 module.exports = abc = (req, res)=>{
-res.render('abc',{someProduct:someProduct, data:"Some data here"});
+res.render('abc',
+{
+    someProduct:someProduct, data:"Some data here"});
 }
 
 module.exports = abcd = (req, res)=>{

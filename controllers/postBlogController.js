@@ -83,31 +83,56 @@ module.exports = allBlog = (req,res)=>{
             console.log(error)
         }
         if(data){
-         res.render('allBlogs', {data: data, aUser:req.session.user, title:"Edit Blog"});
+    res.render('allBlogs', {data: data, comment:req.comment, aUser:req.session.user, title:"Edit Blog"});
         
         }
 
     });
 }
 
+
+
+
 // get read all blog
-module.exports = allBlogPost = async (req, res, next)=>{
+// module.exports = allBlogPost = async (req, res, next)=>{
 
-    // read from database
+//     // read from database
 
-     await postBlogModel.find({}).sort({createdAt: -1}).populate('user').then((data)=>{
-           let docs =  data
-           res.render('allBlogPost', {data:docs, comments: req.comments, aUser:req.session.user, title:"All Blog Post"});
-     });
+//      await postBlogModel.find({}).sort({createdAt: -1}).populate('user').then((data)=>{
+//           let docs =  data
+//           res.render('allBlogPost', {data:docs, comments: req.comments, aUser:req.session.user, title:"All Blog Post"});
+//      });
 
    
+// }
+
+
+
+
+// get read all blog
+module.exports =allBlogPost = (req,res)=>{
+    // read from database
+    postBlogModel.find({}).populate('user').exec((error, data)=>{
+        if(error){
+           
+            // res.render('allBlogs', {error:error});
+            res.render('allBlogs', {error:error});
+            console.log(error)
+        }
+        if(data){
+             let docs =  data ;
+   res.render('allBlogPost', {data:docs, comments: req.comments, aUser:req.session.user, title:"All Blog Post"});
+        
+        }
+
+    });
 }
 
 
 // trending articles
 module.exports = trendingArticles = (req,res, next)=>{
     // read from database
-    postBlogModel.find({}).limit(6).populate('user').exec((error, data)=>{
+    postBlogModel.find({}).populate('user').exec((error, data)=>{
         if(error){
 
             res.render('allBlogs', {error:error});
@@ -124,9 +149,11 @@ module.exports = trendingArticles = (req,res, next)=>{
 
 }
 
-// delete a post
+
+
+// deleting a post
 module.exports = deletePost =(req, res)=>{
-    const{id, imageName} = req.body;
+    const{id, imageName, commentID} = req.body;
     postBlogModel.findByIdAndDelete({_id:id}, (error, success)=>{
         if(error){
          console.log(error);
@@ -187,9 +214,9 @@ module.exports = deletePost =(req, res)=>{
          console.log(err);
         }
         if(success){
-            console.log({msg:"Dislike Comment has been sucessfully deleted"});
+        console.log({msg:"Dislike Comment has been sucessfully deleted " });
         }
-
+    
     });
 
         }
