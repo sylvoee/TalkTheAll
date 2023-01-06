@@ -96,7 +96,7 @@
                            <p>0</p>
                                    <%}else{%>
                                     <% comments.forEach((ct)=>{%>
-                                        <% if(ct.postID._id == aPost.id){%> 
+                                        <% if(ct.postID.id == aPost.id){%> 
                                          <% countComments ++ %> 
                                            
                                                <% } %> 
@@ -202,7 +202,7 @@
             data-href="https://deforum.ng/viewPost/<%= aPost.id %>" 
                                     data-layout="button_count">
                                     </div>
-                    <p class="blockquote-reverse" style="font-family: monospace;font-size: large;">
+                    <p class="blockquote-reverse" style="font-family:monospace;font-size:larger;">
                         <%- aPost.blog  %> 
                     </p>
                     

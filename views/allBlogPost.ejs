@@ -19,6 +19,7 @@
                             <li data-filter=".Culture" class="filter-active">Culture</li>
                             <li data-filter=".Fashion" class="filter-active">fashion</li>
                             <li data-filter=".Sport" class="filter-active">Sport</li>
+                            <li data-filter=".Technology" class="filter-active">Technology</li>
                             <li data-filter=".Others">Others</li>
                             
                         </ul>
@@ -151,6 +152,49 @@
                          <%})%>
                         </div>
                         <%}%> 
+
+
+
+
+                        <div class="col-lg-4 col-md-6 col-sm-12 portfolio-item Technology wow fadeInUp" data-wow-delay="0.0s">
+                            <% if(typeof data == 'undefined'){%>
+                             <p></p>
+                            <%}else{
+                            data.forEach((dt)=>{%>
+                               <% if (dt.category == 'Technology') {%>
+                               <div class="portfolio-wrap" >
+                               <div class="portfolio-img">
+                                   <% if(typeof dt.image[0] == 'undefined'){%>
+                  <p></p>       
+                               <%}else{%>
+                <img src="/uploads/<%= dt.image[0].filename %>" style="height: 40vh;" alt="Blog">
+                              <% } %>
+                               </div>
+                               <div class="">
+           
+                                   <h4 class="h4"><%= dt.title  %> </h4>
+                               </div>
+                               <div class="card mt-2">
+                               <div class="card-body">
+                                   
+                                   <a class="btn" href="viewPost/<%= dt.id  %> " class = "p-2"><b class="h5">More</b> <i class="fa fa-angle-info"></i></a>
+                                   <% if(typeof dt.image[0] == 'undefined'){%>
+                           <a class="btn" href="/img/hero.png" data-lightbox="portfolio">+</a>
+                                   <%}else{%>
+                           <a class="btn" href="/uploads/<%= dt.image[0].filename %>" data-lightbox="portfolio">+</a>
+                                  <%}%>
+                                   <i class="far fa-calendar-alt"></i><%= dt.createdAt.toLocaleString('en-US') %></p>
+                               </div>
+                               </div>
+                                
+                           </div>
+                       </div>
+                       <div class="col-lg-4 col-md-6 col-sm-12 portfolio-item Technology wow fadeInUp" data-wow-delay="0.2s">
+                           <%} %> 
+                            <%})%>
+                           </div>
+                           <%}%> 
+   
 
 
 

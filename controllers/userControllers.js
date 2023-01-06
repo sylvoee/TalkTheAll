@@ -63,7 +63,7 @@ const { render } = require('ejs');
 
 // get sign up controller
 module.exports = signUp = (req, res)=>{
-     res.render('signUp', {title: "Deforum-Register"});
+     res.render('signUp', {title: "talkTheAll-Register"});
  }
 
  // post signUp
@@ -126,7 +126,7 @@ module.exports = signUp = (req, res)=>{
              // console.log(Users)
 
             //    sending mail
-sendMail(email, 'WELCOME TO Deforum, FORUM', '<div><h1>Deforum</h1><p>Thanks for signing up with Deforum . Please click <a href = "https://glaremindstechtest.herokuapp.com/login"><b>HERE</b></a> to login</p></div>');
+sendMail(email, 'WELCOME TO talkTheAll', '<div><h1>talkTheAll</h1><p>Thanks for signing up with talkTheAll . Please click <a href = "https:localhost:8000/login"><b>HERE</b></a> to login</p></div>');
              }
            })
            
@@ -262,10 +262,11 @@ module.exports = confirmEmail = (req, res)=>{
                let id = match.id;
                resetId = id
              
-              const link = 'https://glaremindstechtest.herokuapp.com/change-password';
+              const link = 'https:localhost:8000/change-password';
                // console.log(resetId)
-sendMail(email, 'CHANGE PASSWORD / FORGET  PASSWORD', '<div><h2>Deforum</h2><form action="https://glaremindstechtest.herokuapp.com/reset-id" method = "POST"><input type="hidden" value="'+ resetId + '" name="test"><button class= "btn btn-info">Click To Reset</button></form></div> ');
+sendMail(email, 'CHANGE PASSWORD / FORGET  PASSWORD', '<div><h2>talkTheAll</h2><form action="https:localhost:8000/reset-id" method = "POST"><input type="hidden" value="'+ resetId + '" name="test"><button class= "btn btn-info">Click To Reset</button></form></div> ');
                 res.redirect('/');
+                console.log("mail sent successfully")
             }
         }else{
             res.render('confirmEmail', {msg: "Email not found"});
@@ -280,7 +281,7 @@ sendMail(email, 'CHANGE PASSWORD / FORGET  PASSWORD', '<div><h2>Deforum</h2><for
  // reset Id
  module.exports = getId = (req, res)=>{
   const{test}= req.body;
-  res.render('changePassword', {resetId : test, title:"Deforum - Password Reset"});
+  res.render('changePassword', {resetId : test, title:"talkTheAll - Password Reset"});
  
 }
  
@@ -288,7 +289,7 @@ sendMail(email, 'CHANGE PASSWORD / FORGET  PASSWORD', '<div><h2>Deforum</h2><for
  // Get Change Password
  module.exports = changePassword =(req, res)=>{
      console.log("Change password route reached")
-     res.render('changePassword', { resetId :  resetId, title:"Deforum - Password Reset"});
+     res.render('changePassword', { resetId :  resetId, title:"talkTheAll - Password Reset"});
  }
 
  //update forget password controller
