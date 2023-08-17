@@ -64,8 +64,8 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
-// apply express-flash-message middleware
-app.use(flash({ sessionKeyName: 'flashMessage' }));
+// // apply express-flash-message middleware
+// app.use(flash({ sessionKeyName: 'flashMessage' }));
 
 // using routes
 app.use('/', routes);
@@ -76,12 +76,7 @@ mongoose.connect(process.env.DBURL, {
   useUnifiedTopology: true,
   //useFindAndModify: false,
   //useCreateIndex: true
-},  (err, suc)=>{
-  if(err){console.log(err)}
-  if(suc){
-    console.log("db SUCESSFULLY CONNECTED")
-  }
-  });
+}).then(sucess=> console.log("db SUCESSFULLY CONNECTED")).catch(err => console.log(err));
 
   var port = process.env.PORT || '8000';
 app.set('port', port);

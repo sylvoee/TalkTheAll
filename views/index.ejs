@@ -1,6 +1,6 @@
 
         <!-- Hero Start -->
-        <div class="hero" id="home">
+        <div class="hero" id="home" style=" background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(26,10,68,0.6811099439775911) 50%, rgb(4, 126, 51) 100%); ">
             <div class="container-fluid">
                 <div class="row align-items-center">
                     <div class="col-sm-12 col-md-6">
@@ -43,7 +43,7 @@
         <div class="testimonial wow fadeInUp" daa-wow-deltay="0.1s" id="review"
         style="border-radius: 40% 0% 0% 0%;">
             <div class="container">
-                <div class="section-header text-center wow zoomIn" data-wow-delay="0.1s">
+                <div class="section-header text-center wow zoomIn" background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(26,10,68,0.6811099439775911) 50%, rgba(252,176,69,1) 100%); data-wow-delay="0.1s">
                     <p>From Blog</p>
                     <h2>Trending Articles</h2>
                 </div>
@@ -62,8 +62,8 @@
                             <img style="width: 30%;" src="/uploads/<%= art.image[0].filename %> " alt=""> 
                                                 <%}%>
                                 </div>
-                                <div class="testimonial-text" >
-                                    <h4 class="text-info h3">
+                    <div class="testimonial-text" style=" background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(26,10,68,0.6811099439775911) 50%, rgba(252,176,69,1) 100%); color:white" >
+                                    <h4 class="text-light h3">
                                        <%= art.title  %> 
                                     </h4>
                                     <small>
@@ -74,7 +74,7 @@
                                    <div>
                                        <b>Posted By</b> Admin 
                                    </div>
-                                    <div><a href="/viewPost/<%= art.id  %>" class="text-decoration-none">More</a></div>
+                                    <div><a href="/viewPost/<%= art.id  %>" class="text-decoration-none text-light">More</a></div>
                                 </div>
                                
                          

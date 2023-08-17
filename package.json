@@ -1,28 +1,28 @@
 {
-  "name": "def",
+  "name": "anapp",
   "version": "0.0.0",
   "private": true,
   "scripts": {
     "start": "nodemon app.js"
   },
   "dependencies": {
-    "bcrypt": "^5.0.1",
-    "connect-mongo": "^4.6.0",
+    "bcrypt": "^5.1.1",
+    "connect-mongo": "^5.0.0",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
-    "dotenv": "^14.3.0",
+    "dotenv": "^16.3.1",
     "dotgitignore": "^2.1.0",
-    "ejs": "^3.1.8",
+    "ejs": "^3.1.9",
     "express": "^4.18.2",
     "express-ejs-layouts": "^2.5.1",
-    "express-flash-message": "^2.1.0",
-    "express-session": "^1.17.2",
+    "express-flash-message": "^3.0.2",
+    "express-session": "^1.17.3",
     "http-errors": "~1.6.3",
     "method-override": "^3.0.0",
-    "mongoose": "^6.1.8",
+    "mongoose": "^7.4.3",
     "morgan": "~1.9.1",
-    "multer": "^1.4.4",
-    "nodemailer": "^6.7.2",
-    "nodemon": "^2.0.15"
+    "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.9.4",
+    "nodemon": "^3.0.1"
   }
 }

@@ -8,7 +8,7 @@ const mongoose = require('mongoose');
 
 
  // post comment
-module.exports = postComment = (req, res)=>{
+module.exports = postComment = async  (req, res)=>{
     const {comment, postID, user} = req.body;
     // console.log("This is a post ID " + postID);
     let aComment = new commentModel({
@@ -17,18 +17,18 @@ module.exports = postComment = (req, res)=>{
 
     // saving blog
     if(comment != ''){
-        aComment.save((err, data)=>{
+        let data = await aComment.save() ;
             if(data){
             res.redirect('/viewPost/' + postID);
              // console.log({msg: "comment has been made successfully"})
             }
-            if(err){
-             //    res.render(commentModel, {err: err});
+            if(!data){
+             //    res.render(commentModel, {err: !data});
             
-             console.log({err :err});
+             console.log({err :!data});
      
             }
-         });
+         
     }
    
 }

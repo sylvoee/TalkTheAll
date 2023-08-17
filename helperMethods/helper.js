@@ -49,15 +49,18 @@ module.exports = authorised = (req, res, next)=>{
 const { render } = require('ejs');
      let sendMail = (receiver, subject, HTMLmsg)=>{
         var transporter = nodemailer.createTransport({
-            service: 'gmail',
+            host:  process.env.MAIL_HOST,
+            port:465,
+            secure:true,  
+
             auth: {
-              user: 'glareminds@gmail.com',
-              pass: 'sylvicglareminds88'
+              user: process.env.USER,
+              pass: process.env.EMAIL_PASS
             }
           });
           
           var mailOptions = {
-            from: 'glareminds@gmail.com',
+            from: 'TalkTheAll <support@talktheall.com.ng>',
             to: receiver,
             subject: subject,
             html: HTMLmsg
@@ -66,7 +69,7 @@ const { render } = require('ejs');
           transporter.sendMail(mailOptions, function(error, info){
             if (error) {
               console.log(error);
-            } else {
+            }else{
               console.log('Email sent: ' + info.response);
             }
           });

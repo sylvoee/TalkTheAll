@@ -35,7 +35,7 @@ module.exports = postBlog = (req, res)=>{
 
   
   // post postBlog
-module.exports = postBlog = (req, res)=>{
+module.exports = postBlog = async(req, res)=>{
     if(typeof req.body != 'undefined'){
     const {category, commentStatus, title, image , blog} = req.body;
     // console.log("From image " + req.file.filename);
@@ -48,12 +48,12 @@ var myPost = {
 
     // saving blog
     if(typeof title != "undefined" || typeof blog != 'undefined'){
-        postBlog.save((error, data)=>{
-            if(error){
-                res.render('post-blog', {error: error});
+       let data = await postBlog.save() ;
+            if(!data){
+                res.render('post-blog', {error: !data});
            
             // res.send(error);
-             console.log({error :error});
+             console.log({error :!docs});
      
             }
             if(data){
@@ -63,7 +63,7 @@ var myPost = {
 
             }
             
-         });
+         
     }else{
         res.render('post-blog', {aUser: req.session.user});
     }
@@ -73,21 +73,20 @@ var myPost = {
 }
 
 // get read all blog Admin
-module.exports = allBlog = (req,res)=>{
+module.exports = allBlog = async(req,res)=>{
     // read from database
-    postBlogModel.find({}).sort({createdAt: -1}).populate('user', 'comments').exec((error, data)=>{
-        if(error){
-           
+    let data = await postBlogModel.find({}).sort({createdAt: -1}).populate('user', 'comments').exec();
+        if(!data){
             // res.render('allBlogs', {error:error});
-            res.render('allBlogs', {error:error});
-            console.log(error)
+            res.render('allBlogs', {error: !data});
+            console.log(!data);
         }
         if(data){
     res.render('allBlogs', {data: data, comment:req.comment, aUser:req.session.user, title:"Edit Blog"});
         
         }
 
-    });
+    
 }
 
 
@@ -110,14 +109,14 @@ module.exports = allBlog = (req,res)=>{
 
 
 // get read all blog
-module.exports =allBlogPost = (req,res)=>{
+module.exports =allBlogPost = async (req,res)=>{
     // read from database
-    postBlogModel.find({}).populate('user').exec((error, data)=>{
-        if(error){
+    let data = await postBlogModel.find({}).populate('user').exec();
+        if(!data){
            
             // res.render('allBlogs', {error:error});
-            res.render('allBlogs', {error:error});
-            console.log(error)
+            res.render('allBlogs', {error:!data});
+            console.log(!data)
         }
         if(data){
              let docs =  data ;
@@ -125,44 +124,41 @@ module.exports =allBlogPost = (req,res)=>{
         
         }
 
-    });
+   
 }
 
 
 // trending articles
-module.exports = trendingArticles = (req,res, next)=>{
+module.exports = trendingArticles = async (req,res, next)=>{
     // read from database
-    postBlogModel.find({}).populate('user').exec((error, data)=>{
-        if(error){
-
-            res.render('allBlogs', {error:error});
-            console.log(error)
-        }
-        if(data){
+    let data = await postBlogModel.find({}).populate('user').exec();
+    if(data){
         req.trendingArticles  = data;
        // console.log(req.trendingArticles);
     next();
          
+        }else{
+            res.render('allBlogs', {error:!data});
+            console.log(error) 
         }
 
-    });
 
 }
 
 
 
 // deleting a post
-module.exports = deletePost =(req, res)=>{
+module.exports = deletePost = async(req, res)=>{
     const{id, imageName, commentID} = req.body;
-    postBlogModel.findByIdAndDelete({_id:id}, (error, success)=>{
-        if(error){
-         console.log(error);
+    let success = await postBlogModel.findByIdAndDelete({_id:id}) ;
+        if(!success){
+         console.log(!success);
         }
         if(success){
         console.log("post deleted");
         }
 
-    });
+    
 
     // delete image from post function
 
@@ -177,76 +173,69 @@ module.exports = deletePost =(req, res)=>{
 
 
     // Delete comment
-    commentModel.deleteMany({postID:id}, (err, success)=>{
-        if(err){
-         res.send(err);
-         console.log(err);
+    success = await commentModel.deleteMany({postID:id});
+        if(!success){
+         res.send(!success);
+         console.log(!success);
         }
         if(success){
         // res.render('deleteComment', {msg:"Post has been sucessfully deleted"})
         console.log("comment deleted");
 
+
     // Delete comment on comment
-    commentCommentModel.deleteMany({postID:id}, (err, success)=>{
-        if(err){
-         console.log(err);
+    success = await commentCommentModel.deleteMany({postID:id})
+        if(!success){
+         console.log(!success);
         }
         if(success){
            console.log({msg:"Comment Comment has been sucessfully deleted"});
         }
 
-    });
+    
 
     // Delete likes
-    likeCommentModel.deleteMany({postID:id}, (err, success)=>{
-        if(err){
-         console.log(err);
+     success = await likeCommentModel.deleteMany({postID:id});
+        if(!success){
+         console.log(!success);
         }
         if(success){
          console.log({msg:"like Comment has been sucessfully deleted"});
         }
 
-    });
 
     // Delete disikes on comment
-    dislikeCommentModel.deleteMany({postID:id}, (err, success)=>{
-        if(err){
-         console.log(err);
-        }
+    success = await dislikeCommentModel.deleteMany({postID:id}) ;
+         
         if(success){
         console.log({msg:"Dislike Comment has been sucessfully deleted " });
         }
-    
-    });
 
         }
 
-    });
+    
 
 
 // Delete likes on post
-    likesModel.deleteMany({postID:id}, (err, success)=>{
-        if(err){
-         console.log(err);
+    success = likesModel.deleteMany({postID:id})
+        if(!success){
+         console.log(!success);
         }
         if(success){
         // res.render('deleteComment', {msg:"Post has been sucessfully deleted"});
         console.log("comment deleted");
         }
-    });
-
+    
 
     // Delete dislike post
-    dislikesModel.deleteMany({postID:id}, (err, success)=>{
-        if(err){
-         console.log(err);
+    success = await dislikesModel.deleteMany({postID:id})
+        if(!success){
+         console.log(!success);
         }
         if(success){
            //console.log({msg:"Comment Comment has been sucessfully deleted"});
            console.log("Dislikes on post deleted");
         }
-
-    });
 
     // Delete comment on comment
  res.redirect('back');
@@ -255,17 +244,17 @@ module.exports = deletePost =(req, res)=>{
 }
 
 // Get Edit Post
-module.exports = editPost = (req, res)=>{
-    postBlogModel.findById({"_id": req.params.id}).exec((error, data)=>{
-        if(error){
-             res.render('editPost', {error :error});
-             console.log(error)
+module.exports = editPost = async (req, res)=>{
+    let data = await postBlogModel.findById({"_id": req.params.id}).exec() ;
+        if(!data){
+             res.render('editPost', {error :!data});
+             console.log(!data)
         }
         if(data){
             res.render('editPost', {data:data, aUser:req.session.user});
              console.log("Edit post Form");
         }
-    });
+    
 }
 
 // To Edit post

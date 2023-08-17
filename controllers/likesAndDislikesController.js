@@ -9,13 +9,13 @@ const dislikeCommentModel = require('../model/dislikeComment');
 
 // Post dislikes
 let duplicateDislike = ""
-module.exports = dislikes = (req, res, next)=>{
+module.exports = dislikes = async(req, res, next)=>{
   const{postID} = req.body;
   const user = req.session.user._id;
   // console.log(postID)
 
-  dislikesModel.find({}).exec((err, data)=>{
- if(err){
+  let data = await dislikesModel.find({}).exec();
+ if(!data){
    console.log("err");
  }
  if(data){ 
@@ -29,7 +29,7 @@ data.forEach(dt => {
 });
  }
  console.log(duplicateDislike);
-  });
+  
 
     // Check if it is dulicated before posting
     if(duplicateDislike == "exist" || duplicateDislike != ""){
@@ -37,15 +37,15 @@ data.forEach(dt => {
     console.log("Data exist ok");
     }else if(duplicateDislike == "noExist" || duplicateDislike == "" ){
     const aDislike = new dislikesModel({postID : postID, user:user });
-      aDislike.save((err, data)=>{
-       if(err){
+      let data = await aDislike.save();
+       if(!data){
            // console.log(err);
        }
        if(data){
          //  console.log(data)
-        
+        next();
        }
-      });
+      
       console.log("Data does not exist");
       res.redirect('back');
       next();
@@ -55,13 +55,13 @@ data.forEach(dt => {
 
 // Post likes
 let duplicateLike = ""
-module.exports = likes = (req, res, next)=>{
+module.exports = likes = async(req, res, next)=>{
   const{postID} = req.body;
   const user = req.session.user._id;
   // console.log(postID)
 
-  likesModel.find({}).exec((err, data)=>{
- if(err){
+  let data = await likesModel.find({}).exec();
+ if(!data){
    console.log("err");
  }
  if(data){ 
@@ -73,9 +73,10 @@ data.forEach(dt => {
    duplicateLike = "noExist";
   }
 });
+next();
  }
  console.log(duplicateLike);
-  });
+  
 
     // Check if it is dulicated before posting
     if(duplicateLike == "exist" || duplicateLike != ""){
@@ -83,18 +84,18 @@ data.forEach(dt => {
     console.log("Data exist ok");
     }else if(duplicateLike == "noExist" || duplicateLike == "" ){
     const aLike = new likesModel({postID : postID, user:user });
-      aLike.save((err, data)=>{
-       if(err){
-           // console.log(err);
+      let data = await aLike.save();
+       if(!data){
+           console.log(!data);
        }
        if(data){
          //  console.log(data)
         
        }
-      });
+      
       console.log("Data does not exist");
       res.redirect('back');
-      next();
+      
    }
       
     }
@@ -102,45 +103,43 @@ data.forEach(dt => {
 
 
 // get read all likes on post
-module.exports = allLikes = (req, res, next)=>{
+module.exports = allLikes = async (req, res, next)=>{
 
-  likesModel.find({}).populate('user').populate('postID').exec((err, docs)=>{
-      if(err){
-          res.send({err:err})
-          console.log(err)
-      }
-      if(docs){
-           req.likes = docs
-      // console.log(docs);
-      }
+  let docs = await likesModel.find({}).populate('user').populate('postID').exec();
 
-  });
-  next();
+  if(!docs){
+    res.send({err:err})
+    console.log(err)
+}
+if(docs){
+     req.likes = docs
+     next();
+// console.log(docs);
+
+}
+  
+  
 }
 
 
 // get read all dislikes on post
-module.exports = allDislikes = (req, res, next)=>{
+module.exports = allDislikes = async (req, res, next)=>{
  
   // read likes from database
-  dislikesModel.find({}).populate('user').populate('postID').exec((err, docs)=>{
-      if(err){
-         
-          console.log(err)
-      }
-      if(docs){
-           req.dislikes = docs;
-      // console.log(docs);
-      }
+  let docs = await dislikesModel.find({}).populate('user').populate('postID').exec();
 
-  });
-  next();
+  if(docs){
+    req.dislikes = docs;
+    next();
+// console.log(docs);
+}
+
 }
 
 
 // likeComment
 let duplicateLikeComment = ""
-module.exports = likeAComment = (req, res, next)=>{
+module.exports = likeAComment = async(req, res, next)=>{
   const{ commentID, postID} = req.body;
   let user = req.session.user._id
    console.log("tHIS IS THE POST id" + postID);
@@ -152,8 +151,8 @@ module.exports = likeAComment = (req, res, next)=>{
    });
 
 
- likeCommentModel.find({}).exec((err, data)=>{
- if(err){
+ let data = await likeCommentModel.find({}).exec();
+ if(!data){
    console.log("err");
  }
  if(data){ 
@@ -164,10 +163,11 @@ data.forEach(dt => {
   }else if(dt.commentID != commentID && dt.user != user){
    duplicateLikeComment = "noExist";
   }
+  next();
 });
  }
  console.log(duplicateLikeComment);
-  });
+  
 
     // Check if it is dulicated before posting
     if(duplicateLikeComment == "exist" || duplicateLikeComment != ""){
@@ -175,15 +175,15 @@ data.forEach(dt => {
     console.log("Data exist ok");
     }else if(duplicateLikeComment == "noExist" || duplicateLikeComment == "" ){
     const aLike = new likeCommentModel({commentID : commentID, postID:postID, user:user });
-      aLike.save((err, data)=>{
-       if(err){
-           // console.log(err);
+      let data = await aLike.save();
+       if(!data){
+           // console.log(!data);
        }
        if(data){
           console.log(data)
         
        }
-      });
+      
       console.log("Data does not exist");
       res.redirect('back');
       next();
@@ -195,20 +195,17 @@ data.forEach(dt => {
 
   
 // get read all likes on comments
-module.exports = allLikeComments = (req, res, next)=>{
+module.exports = allLikeComments = async (req, res, next)=>{
  
   // read likes from database
-  likeCommentModel.find({}).populate('user').populate('commentID').exec((err, docs)=>{
-      if(err){
-          console.log(err)
-      }
+  let docs = await likeCommentModel.find({}).populate('user').populate('commentID').exec();
+      
       if(docs){
            req.likeComments = docs;
+           next();
            // console.log(docs.length)
       }
-
-  });
-  next();
+  
 }
 
 
@@ -216,15 +213,15 @@ module.exports = allLikeComments = (req, res, next)=>{
 
 // dislikeAComment
 let dDislikeComment = ""
-module.exports = dislikeAComment = (req, res, next)=>{
+module.exports = dislikeAComment = async (req, res, next)=>{
   const{commentID, postID} = req.body;
   let user = req.session.user._id
   console.log(commentID)
  const aDislike = new dislikeCommentModel({commentID:commentID, postID:postID, user :user });
 
- dislikeCommentModel.find({}).exec((err, data)=>{
- if(err){
-   console.log("err");
+ let data = await dislikeCommentModel.find({}).exec();
+ if(!data){
+   console.log(!data);
  }
  if(data){ 
 // loop though each data
@@ -234,10 +231,10 @@ data.forEach(dt => {
   }else if(dt.commentID != commentID && dt.user != user){
    dDislikeComment = "noExist";
   }
-});
- }
- console.log(dDislikeComment);
-  });
+
+ });
+
+ 
 
     // Check if it is dulicated before posting
     if(dDislikeComment == "exist" || dDislikeComment != ""){
@@ -263,24 +260,19 @@ data.forEach(dt => {
 
 
 
-
-
-
 // get read all dislikes on comments
-module.exports = allDisLikeComments = (req, res, next)=>{
+module.exports = allDisLikeComments = async(req,res,next)=>{
   // read likes from database
-  dislikeCommentModel.find({}).populate('user').populate('commentID').exec((err, docs)=>{
-      if(err){
-          res.send({err:err})
-          console.log(err)
-      }
+  let docs = await dislikeCommentModel.find({}).populate('user').populate('commentID').exec();
+      
       if(docs){
-           req.dislikeComments = docs
-     
+           req.dislikeComments = docs ;
+           next();
       }
 
-  });
-  next();
+  
 }
 
- 
+
+
+}

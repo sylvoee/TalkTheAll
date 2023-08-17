@@ -11,30 +11,30 @@ module.exports = function profile(req, res){
 }
 
 // get create profile
-module.export = createProfileForm = (req, res, next)=>{
+module.export = createProfileForm = async(req, res, next)=>{
   // console.log(req.session.user._id);
-  userModel.findById(req.session.user._id).exec((err, docs)=>{
-  if(err){
-console.log(err);
+  let docs = await userModel.findById(req.session.user._id).exec();
+  if(!docs){
+console.log(!docs);
   }
   if(docs){
   res.render("createProfile", {aUser:req.session.user, docs:docs});
   // console.log(docs)
   }
-  });
+  
 
 }
 
 // create profile
-module.exports = createProfile =(req, res, next)=>{
+module.exports = createProfile = async(req, res, next)=>{
     // res.render('myProfile');
     const {DOB, place, person, maritalStatus, occupation, hobby, sex, info, purpose,institute, quote, issue,facebook, instagram} = req.body;
     if(occupation !='' & purpose != '', issue !=''){
       let profile = new profileModel({DOB, place, person, maritalStatus, occupation, hobby, sex, info, purpose, institute, 
         quote, issue,facebook, instagram, profileImage:'', user: req.session.user._id});
-      profile.save((error, data)=>{
-        if(error){
-         console.log(error);
+      let data = await profile.save();
+        if(!data){
+         console.log(!data);
         
         }
         if(data){
@@ -46,7 +46,7 @@ module.exports = createProfile =(req, res, next)=>{
      
      
         }
-      });
+    
       
     }
 
@@ -74,39 +74,37 @@ module.exports = createProfile =(req, res, next)=>{
   }
   
   // read all Profiles
-  module.exports = viewProfile  = (req, res)=>{
+  module.exports = viewProfile  = async(req, res)=>{
     // res.send("route reached")
    
     // read all Profile
-    profileModel.find({}).populate('user').populate('profile').exec((err, docs)=>{
-      if(err){
-          res.send({err:err})
-          // res.render('allComment', {err:err});
-          console.log(err)
+    let docs = profileModel.find({}).populate('user').populate('profile').exec();
+      if(!docs){
+          res.send({err:docs})
+          // res.render('allComment', {err:docs});
+          console.log(!docs)
       }
       if(docs){
           res.render('index', {docs: docs});
           // console.log(docs);
         
-         
-       
-      //  res.send({data :docs});
+    
       }
   
-  }); 
+  
   
   }
   
    //read a Profile
-   module.exports = viewAProfile  = (req, res)=>{
+   module.exports = viewAProfile  = async(req, res)=>{
    
     // read all Profile
     // get the Id from User Login
-    profileModel.find({"user": req.params.id}).populate('user').exec((err, docs)=>{
-      if(err){
-          console.log({err:err})
+    let docs = await profileModel.find({"user": req.params.id}).populate('user').exec();
+      if(!docs){
+          console.log({err: !docs})
           // res.render('allComment', {err:err});
-          console.log(err)
+          console.log(!docs)
       }
       if(docs){
         if(typeof docs[0] !='undefined'){
@@ -120,20 +118,20 @@ module.exports = createProfile =(req, res, next)=>{
       
       }
   
-  }); 
+  
   
   }
   
   // get edit profileForm
-module.export = editProfileForm = (req, res, next)=>{
-  profileModel.findById(req.params.id).populate('user').exec((err, docs)=>{
-   if(err){
-   console.log(err);
+module.export = editProfileForm = async(req, res, next)=>{
+  let docs = await profileModel.findById(req.params.id).populate('user').exec();
+   if(!docs){
+   console.log(!docs);
    }
      if(docs){
       res.render("editProfileForm", {docs:docs, aUser:req.session.user});
      }
-  });
+  
  
  }
  

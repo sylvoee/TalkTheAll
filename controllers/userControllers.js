@@ -68,7 +68,7 @@ module.exports = signUp = (req, res)=>{
 
  // post signUp
  let Users = [];
- module.exports = signUp = (req, res)=>{
+ module.exports = signUp = async(req, res)=>{
     const {name, email, password, confirmPassword} = req.body;
     let errors = [];
  // check for undefined
@@ -102,7 +102,7 @@ module.exports = signUp = (req, res)=>{
             res.render('signUp' , {msg: email + " already exist"});
             console.log(email + " already exist");
          }else{
-              // amking instance of model
+              // making instance of model
            let instance = new userModel();
            instance.name = name;
            instance.email = email;
@@ -115,9 +115,9 @@ module.exports = signUp = (req, res)=>{
              instance.password = hash;
 
                // Saving record
-           instance.save((err, data)=>{
-             if(err){
-               res.render('signUp', {msg: err});
+           let data = instance.save();
+             if(!data){
+               res.render('signUp', {msg: !data});
              }else if(data){
                // req.flash('success_msg', "You have successfully sign up, you can now log in");
                res.redirect('/login');
@@ -126,9 +126,10 @@ module.exports = signUp = (req, res)=>{
              // console.log(Users)
 
             //    sending mail
-sendMail(email, 'WELCOME TO talkTheAll', '<div><h1>talkTheAll</h1><p>Thanks for signing up with talkTheAll . Please click <a href = "https:localhost:8000/login"><b>HERE</b></a> to login</p></div>');
+            sendMail(email, 'WELCOME TO talkTheAll', '<div><h1>talkTheAll</h1><p>Thanks for signing up with talkTheAll . Please click <a href = "https://talktheall.com.ng/login"><b>HERE</b></a> to login</p></div>');
+
              }
-           })
+           
            
              }); 
            });
@@ -149,12 +150,12 @@ module.exports = login = (req, res)=>{
 }
 
 // post login controller
-module.exports = login = (req, res)=>{
+module.exports = login = async (req, res)=>{
     // res.send('login reached');
     const{email, password, status} = req.body;
     
     if(status == 'osaz@forum'){
-      userModel.findOne({email, status: 'osaz@forum'}).exec((err, data)=>{
+      let data = await userModel.findOne({email, status: 'osaz@forum'}).exec();
         if(data != null || data ){ 
             bcrypt.compare(password, data.password, (err, isMatch)=>{
                 if(isMatch){
@@ -176,12 +177,14 @@ module.exports = login = (req, res)=>{
           console.log("Email or/and password does not exist");
         }
 
-    });
+    
     
     }
     
    if(status != 'osaz@forum'){
-    userModel.findOne({email}).exec((err, data)=>{
+    let data = await userModel.findOne({email}).exec() ;
+    
+  
       if(data != null || data ){ 
           bcrypt.compare(password, data.password, (err, isMatch)=>{
               if(isMatch){
@@ -202,7 +205,7 @@ module.exports = login = (req, res)=>{
         console.log("Email or/and password does not exist");
       }
 
-  });
+
    }
     
 }
@@ -253,18 +256,18 @@ module.exports = confirmEmail = (req, res)=>{
 }
 //  const sendRestID
 // Post confirm password
-module.exports = confirmEmail = (req, res)=>{
+module.exports = confirmEmail = async(req, res)=>{
     const {email} = req.body
     
-     userModel.findOne({email:email}).exec((err , match)=>{
+     let match = await userModel.findOne({email:email}).exec();
         if(match){
             if(email !=''){
                let id = match.id;
                resetId = id
              
-              const link = 'https:localhost:8000/change-password';
+              const link = 'https://talktheall.com.ng/change-password';
                // console.log(resetId)
-sendMail(email, 'CHANGE PASSWORD / FORGET  PASSWORD', '<div><h2>talkTheAll</h2><form action="https:localhost:8000/reset-id" method = "POST"><input type="hidden" value="'+ resetId + '" name="test"><button class= "btn btn-info">Click To Reset</button></form></div> ');
+sendMail(email, 'CHANGE PASSWORD / FORGET  PASSWORD', '<div><h2>talkTheAll</h2><form action="https:https://talktheall.com.ng/reset-id" method = "POST"><input type="hidden" value="'+ resetId + '" name="test"><button class= "btn btn-info">Click To Reset</button></form></div> ');
                 res.redirect('/');
                 console.log("mail sent successfully")
             }
@@ -274,7 +277,7 @@ sendMail(email, 'CHANGE PASSWORD / FORGET  PASSWORD', '<div><h2>talkTheAll</h2><
         }
 
  
-     });
+     
    
  }
 
@@ -326,14 +329,14 @@ module.exports = unauthorised = (req, res)=>{
 }
 
 // create profile
-module.exports = createProfile =(req, res)=>{
+module.exports = createProfile =async(req, res)=>{
   res.render('myProfile');
   const {DOB, place, person, maritalStatus, occupation, hobby, info, purpose,institute, quote, issue,facebook, instagram} = req.body;
   if(occupation !='' & purpose != '', issue !=''){
     let profile = new profileModel({DOB, place, person, maritalStatus, occupation, 
     hobby, info, purpose, institute, quote, issue,facebook, instagram, user: aUser._id});
 
-    profile.save((error, data)=>{
+    let data = await profile.save();
       if(error){
        console.log(error);
       }
@@ -341,22 +344,20 @@ module.exports = createProfile =(req, res)=>{
         // console.log(data)
         res.redirect('/my-profile');
       }
-    });
+    
     
   }
 
 }
 
 // read all Profiles
-module.exports = viewProfile  = (req, res)=>{
+module.exports = viewProfile  = async(req, res)=>{
   // res.send("route reached")
  
   // read all Profile
-  profileModel.find({}).populate('user').exec((err, docs)=>{
-    if(err){
-        //res.send({err:err})
-        // res.render('allComment', {err:err});
-        console.log(err)
+  let docs = await profileModel.find({}).populate('user').exec();
+    if(!docs){
+        console.log(!docs)
     }
     if(docs){
         res.render('index', {docs: docs});
@@ -364,19 +365,19 @@ module.exports = viewProfile  = (req, res)=>{
   
     }
 
-}); 
+
 
 }
 
  //read a Profile
- module.exports = viewAProfile  = (req, res)=>{
+ module.exports = viewAProfile  = async(req, res)=>{
  
   // read all Profile
-  profileModel.find({"user": req.params.id}).populate('user').exec((err, docs)=>{
-    if(err){
-        res.send({err:err})
+  let docs = profileModel.find({"user": req.params.id}).populate('user').exec();
+    if(!docs){
+        res.send({err:!docs})
         // res.render('allComment', {err:err});
-        console.log(err)
+        console.log(!docs)
     }
     if(docs){
         res.render('myProfile', {docs: docs});
@@ -385,7 +386,7 @@ module.exports = viewProfile  = (req, res)=>{
     
     }
 
-}); 
+
 
 }
 
@@ -429,17 +430,18 @@ module.exports = myProfile  =(req, res)=>{
 
 }
 
+
 // get - read all user (moderator)
-module.exports = moderator = (req, res, next)=>{
-  userModel.find({}).exec((err, data)=>{
-if(err){
-  console.log(err)
+module.exports = moderator = async(req, res, next)=>{
+  let data = await userModel.find({}).exec();
+if(!data){
+  console.log(!data)
 }
 if(data){
   res.render('moderator', {data:data , aUser: req.session.user, title:"Moderator"});
   // console.log(data);
 }
-  });
+  
  
 }
 

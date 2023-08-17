@@ -52,7 +52,7 @@ router.delete('/delete-blog', deletePost)
 router.get('/edit-post/:id', authorised, editPost);
 router.get('/trending', trendingArticles);
 router.put('/edit-post/:id', upload.single('image'), authorised, editPosts);
-router.get('/viewPost/:id',trendingArticles , allComment, allCommentComment, allLikes, allDislikes,  allLikeComments , allDisLikeComments, viewAPost);
+router.get('/viewPost/:id',trendingArticles , allComment, allCommentComment, allLikes, allDislikes,  allLikeComments , viewAPost);
 
 // comment routes
 router.get('/all-comment', allComment)
@@ -80,7 +80,7 @@ router.get('/all-dislikes, allDislikes');
 router.post('/like-comment', likeAComment);
 router.post('/dislike-comment', dislikeAComment);
 router.get('/all-like-comments', allLikeComments);
-router.get('/all-dislike-comments', allDisLikeComments);
+// router.get('/all-dislike-comments', allDisLikeComments);
 
 router.get('/',trendingArticles, index);
 // router.get('/about', trendingArticles, about);
